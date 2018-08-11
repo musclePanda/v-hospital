@@ -1,30 +1,41 @@
 <template>
   <div class="login-container">
+    <p class="aa">坚持绿色办奥、共享办奥、开放办奥、廉洁办奥</p>
+    <p class="bb">确保把北京冬奥会办成一届精彩、非凡、卓越的奥运盛会</p>
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-      <h3 class="title">vue-element-admin</h3>
+      <h3 class="title">酒店管理系统</h3>
+      <el-form-item prop="userType">
+        <span class="svg-container">
+          <svg-icon icon-class="main" style="font-size:20px;"/>
+        </span>
+        <el-select v-model="value" placeholder="请选择" class="m-select">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="请输入正确的用户名" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password"></svg-icon>
         </span>
         <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
-          placeholder="password"></el-input>
+          placeholder="请输入正确的密码"></el-input>
           <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
-          Sign in
+          登陆
         </el-button>
       </el-form-item>
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: admin</span>
-      </div>
     </el-form>
   </div>
 </template>
@@ -59,7 +70,21 @@ export default {
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false,
-      pwdType: 'password'
+      pwdType: 'password',
+      options: [{
+         value: '1',
+         label: '领导'
+       }, {
+         value: '2',
+         label: '酒店'
+       }, {
+         value: '3',
+         label: '评审员'
+       }, {
+         value: '4',
+         label: '管理员'
+       }],
+       value: ''
     }
   },
   methods: {
@@ -73,6 +98,7 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
+          console.log(this.value)
           this.loading = true
           this.$store.dispatch('Login', this.loginForm).then(() => {
             this.loading = false
@@ -96,6 +122,8 @@ $light_gray:#eee;
 
 /* reset element-ui css */
 .login-container {
+  background-image: url('../../assets/img/main.jpg');
+  background-repeat: no-repeat;
   .el-input {
     display: inline-block;
     height: 47px;
@@ -106,7 +134,7 @@ $light_gray:#eee;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
+      color: block;
       height: 47px;
       &:-webkit-autofill {
         -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
@@ -120,6 +148,11 @@ $light_gray:#eee;
     border-radius: 5px;
     color: #454545;
   }
+  .m-select{
+    .el-input{
+      width:100%;
+    }
+  }
 }
 
 </style>
@@ -132,14 +165,29 @@ $light_gray:#eee;
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: $bg;
+  .aa{
+      position: absolute;
+      left: 100px;
+      top:60px;
+      color:#fff;
+      font-size: 20px;
+    }
+    .bb{
+      position: absolute;
+      left: 260px;
+      top:120px;
+      color:#fff;
+      font-size: 20px;
+    }
   .login-form {
     position: absolute;
-    left: 0;
-    right: 0;
-    width: 520px;
+    right: 40px;
+    top:100px;
+    width: 400px;
     padding: 35px 35px 15px 35px;
     margin: 120px auto;
+    border-radius: 4px;
+    background-color: #fff;
   }
   .tips {
     font-size: 14px;
@@ -164,7 +212,7 @@ $light_gray:#eee;
   .title {
     font-size: 26px;
     font-weight: 400;
-    color: $light_gray;
+    color: block;
     margin: 0px auto 40px auto;
     text-align: center;
     font-weight: bold;
@@ -177,6 +225,9 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  .el-select{
+    width:85%;
   }
 }
 </style>

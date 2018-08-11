@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: false
     }
   },
   filters: {
@@ -60,13 +60,13 @@ export default {
     this.fetchData()
   },
   methods: {
-    fetchData() {
-      this.listLoading = true
-      getList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.listLoading = false
-      })
-    }
+    // fetchData() {
+    //   this.listLoading = true
+    //   getList(this.listQuery).then(response => {
+    //     this.list = response.data.items
+    //     this.listLoading = false
+    //   })
+    // }
   }
 }
 </script>

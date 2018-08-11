@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import BaiduMap from 'vue-baidu-map'
 import 'normalize.css/normalize.css'// A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
@@ -16,6 +16,8 @@ import '@/icons' // icon
 import '@/permission' // permission control
 
 Vue.use(ElementUI, { locale })
+
+Vue.use(BaiduMap,{ak:'pokT9HULnhUGpDoXppsIHMzyUhqN5xhu'})
 
 Vue.config.productionTip = false
 

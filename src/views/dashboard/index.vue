@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name:{{name}}</div>
-    <div class="dashboard-text">roles:<span v-for='role in roles' :key='role'>{{role}}</span></div>
+    <baidu-map class="map" :center="center" :zoom="zoom" :scroll-wheel-zoom="true"></baidu-map>
   </div>
 </template>
 
@@ -10,11 +9,11 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'dashboard',
-  computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
+  data(){
+    return{
+      center:{lng: 115.296662, lat: 40.986393},
+      zoom:15
+    }
   }
 }
 </script>
@@ -28,5 +27,9 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+}
+.map{
+  width:100%;
+  height:700px;
 }
 </style>
