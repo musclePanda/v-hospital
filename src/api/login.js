@@ -1,12 +1,13 @@
 import request from '@/utils/request'
 import qs from 'qs'
-export function login(username, password) {
+export function login(username, password, fgroupid) {
   const data = {
-    loginname:username,
-    nloginpwd:password
+    loginname : username,
+    nloginpwd : password,
+    fgroupid : fgroupid
   }
   return request({
-    url: 'api/wechat2.0/loginAction!login.gl',
+    url: 'api/hotelserver/loginAction!login.gl',
     method: 'post',
     data: qs.stringify(data),
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}

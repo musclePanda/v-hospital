@@ -8,7 +8,7 @@
         <span class="svg-container">
           <svg-icon icon-class="main" style="font-size:20px;"/>
         </span>
-        <el-select v-model="value" placeholder="请选择" class="m-select">
+        <el-select v-model="loginForm.userType" placeholder="请选择" class="m-select">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -41,31 +41,39 @@
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
 
 export default {
   name: 'login',
   data() {
+    const validatePass = (rule, value, callback) => {
+      if (value.length < 2) {
+        callback(new Error('密码不能小于2位'))
+      } else {
+        callback()
+      }
+    }
     const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
+      if (!value.length) {
         callback(new Error('请输入正确的用户名'))
       } else {
         callback()
       }
     }
-    const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('密码不能小于5位'))
+    const validateType = (rule, value, callback) => {
+      if (!value.length) {
+        callback(new Error('请选择用户类型'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: 'admin#*123Y'
+        username: '',
+        password: '',
+        userType:''
       },
       loginRules: {
+        userType: [{ required: true, trigger: 'blur', validator: validateType }],
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
@@ -76,15 +84,14 @@ export default {
          label: '领导'
        }, {
          value: '2',
-         label: '酒店'
-       }, {
-         value: '3',
          label: '评审员'
        }, {
-         value: '4',
+         value: '3',
          label: '管理员'
-       }],
-       value: ''
+       }, {
+         value: '4',
+         label: '酒店'
+       }]
     }
   },
   methods: {
@@ -98,16 +105,22 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          console.log(this.value)
           this.loading = true
           this.$store.dispatch('Login', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: '/' })
           }).catch(() => {
-            this.loading = false
+            this.$alert('请输入正确的用户名和密码', {
+              confirmButtonText: '确定',
+               callback: action => {
+                 this.loginForm.username = ''
+                 this.loginForm.password = ''
+                 this.loginForm.userType = ''
+                 return false
+               }
+            });
           })
         } else {
-          console.log('error submit!!')
           return false
         }
       })

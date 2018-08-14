@@ -29,14 +29,13 @@ const user = {
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
-          console.log(response)
+        login(username, userInfo.password,userInfo.userType).then(response => {
           if(response.data.success){
-            setToken(100)
-            commit('SET_TOKEN', 100)
+            setToken(response.data.msg)
+            commit('SET_TOKEN', response.data.msg)
             resolve()
           }else{
-            alert('登陆用户与密码错误！')
+            reject(error)
           }
         }).catch(error => {
           reject(error)
