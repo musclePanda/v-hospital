@@ -30,10 +30,16 @@ export const constantRouterMap = [
     redirect: '/dashboard',
     name: '首页',
     hidden: true,
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
-    }]
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index')
+      },
+      {
+        path: 'hotal',
+        component: () => import('@/views/hotal/index')
+      }
+    ]
   },
   {
     path: '/example',
@@ -45,7 +51,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/table/index'),
-        meta: { title: '数据', icon: 'form' }
+        meta: { title: '数据', icon: 'form'}
       }
     ]
   },
